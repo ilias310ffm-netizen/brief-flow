@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BriefFlow – Projekte. Einfach. Organisiert.</title>
+<meta name="description" content="BriefFlow hilft dir, Projekte und Aufgaben einfach und übersichtlich zu verwalten.">
+<style>
+:root {
+  --bg:#09090f;
+  --panel:#12121d;
+  --panel2:#191927;
+  --purple:#8855ff;
+  --text:#f6f4ff;
+  --muted:#9995aa;
+  --border:#29283a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+header{
+  height:75px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 8%;
+  border-bottom:1px solid var(--border);
+}
+.logo{font-size:24px;font-weight:800;letter-spacing:-1px}
+.logo span{color:var(--purple)}
+nav{display:flex;gap:28px;align-items:center}
+nav a{color:var(--muted);text-decoration:none;font-size:14px}
+nav a:hover{color:white}
+.btn{
+  background:var(--purple);
+  color:white;
+  border:0;
+  border-radius:9px;
+  padding:12px 20px;
+  font-weight:700;
+}
+.btn:hover{background:#7040ed}
+.btn-outline{
+  background:transparent;
+  border:1px solid var(--border);
+  color:white;
+}
+.hero{
+  text-align:center;
+  padding:105px 20px 85px;
+  background:radial-gradient(ellipse at 50% 0%,#30205b 0%,transparent 65%);
+}
+.tag{
+  display:inline-block;
+  border:1px solid #6141a1;
+  color:#c4aaff;
+  background:#211639;
+  border-radius:30px;
+  padding:8px 15px;
+  font-size:12px;
+  margin-bottom:25px;
+}
+h1{
+  font-size:clamp(42px,7vw,76px);
+  letter-spacing:-3px;
+  line-height:1.08;
+  max-width:850px;
+  margin:0 auto 23px;
+}
+.gradient{
+  background:linear-gradient(90deg,#a98aff,#6e8dff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+.hero p{
+  max-width:570px;
+  margin:0 auto 30px;
+  color:var(--muted);
+  font-size:17px;
+  line-height:1.7;
+}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+section{padding:75px 8%}
+.section-title{text-align:center;margin-bottom:42px}
+.section-title h2{font-size:35px;margin-bottom:12px}
+.section-title p{color:var(--muted)}
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:26px;
+}
+.card .emoji{font-size:27px;margin-bottom:17px}
+.card h3{margin-bottom:10px}
+.card p{color:var(--muted);line-height:1.6;font-size:14px}
+.dashboard{
+  max-width:1000px;
+  margin:auto;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px;
+}
+.dash-top{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:25px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:25px}
+.stat{background:var(--panel2);padding:20px;border-radius:12px}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:29px;margin-top:10px}
+.project{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 5px;border-bottom:1px solid var(--border);gap:12px;
+}
+.project:last-child{border:0}
+.project small{color:var(--muted)}
+.status{color:#b69aff;background:#30204c;padding:6px 10px;border-radius:20px;font-size:12px}
+.pricing{
+  display:grid;grid-template-columns:repeat(2,minmax(0,350px));
+  justify-content:center;gap:20px;
+}
+.price-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:30px}
+.price-card.featured{border-color:var(--purple)}
+.price{font-size:40px;font-weight:800;margin:18px 0}
+.price small{font-size:14px;color:var(--muted);font-weight:400}
+.price-card ul{list-style:none;color:var(--muted);line-height:2.5;margin:20px 0}
+.price-card li::before{content:"✓ ";color:#a78bfa}
+footer{
+  border-top:1px solid var(--border);
+  padding:35px 8%;
+  color:var(--muted);
+  display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
+}
+footer a{color:var(--muted);text-decoration:none}
+.modal-bg{
+  position:fixed;inset:0;background:#000b;display:none;
+  align-items:center;justify-content:center;padding:20px;z-index:10;
+}
+.modal{
+  width:100%;max-width:420px;background:var(--panel);
+  border:1px solid var(--border);border-radius:16px;padding:28px;
+}
+.modal h2{margin-bottom:20px}
+.modal input{
+  display:block;width:100%;padding:13px;margin:12px 0;
+  border:1px solid var(--border);border-radius:8px;
+  background:var(--bg);color:white;
+}
+.modal .btn{width:100%;margin-top:10px}
+.close{float:right;background:none;color:white;border:0;font-size:23px}
+#app{display:none}
+#message{color:#b69aff;font-size:13px;margin-top:12px}
+@media(max-width:700px){
+  header{padding:0 5%}
+  nav a:not(.btn){display:none}
+  section{padding:55px 5%}
+  .features{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
+  .pricing{grid-template-columns:1fr}
+  .hero{padding-top:75px}
+  h1{letter-spacing:-2px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Brief<span>Flow.</span></div>
+  <nav>
+    <a href="#features">Funktionen</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#pricing">Preise</a>
+    <button class="btn" onclick="openModal()">Loslegen</button>
+  </nav>
+</header>
+
+<main id="landing">
+  <div class="hero">
+    <div class="tag">✦ Willkommen bei BriefFlow</div>
+    <h1>Deine Projekte.<br><span class="gradient">Alles im Flow.</span></h1>
+    <p>
+      Organisiere deine Projekte an einem Ort.
+      Behalte Aufgaben im Überblick und arbeite
+      strukturierter an deinen Zielen.
+    </p>
+    <div class="hero-actions">
+      <button class="btn" onclick="openModal()">Kostenlos starten →</button>
+      <a href="#features"><button class="btn btn-outline">Mehr erfahren</button></a>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="section-title">
+      <h2>Alles an einem Ort.</h2>
+      <p>Weniger Chaos. Mehr Übersicht.</p>
+    </div>
+    <div class="features">
+      <div class="card">
+        <div class="emoji">📁</div>
+        <h3>Projektverwaltung</h3>
+        <p>Verwalte deine Projekte übersichtlich und behalte deine Arbeit im Blick.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">⚡</div>
+        <h3>Einfach organisiert</h3>
+        <p>Erstelle Projekte und behalte deine nächsten Schritte im Auge.</p>
+      </div>
+      <div class="card">
+        <div class="emoji">📊</div>
+        <h3>Fortschritt sehen</h3>
+        <p>Behalte den Überblick über deine Projekte und deinen Fortschritt.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboard">
+    <div class="section-title">
+      <h2>Dein persönlicher Arbeitsbereich</h2>
+      <p>So sieht dein BriefFlow-Dashboard aus.</p>
+    </div>
+    <div class="dashboard">
+      <div class="dash-top">
+        <div>
+          <h2>Dashboard</h2>
+          <small style="color:var(--muted)">Deine Projektübersicht</small>
+        </div>
+        <button class="btn" onclick="openModal()">Jetzt ausprobieren</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><small>Projekte</small><strong>12</strong></div>
+        <div class="stat"><small>Abgeschlossen</small><strong>8</strong></div>
+        <div class="stat"><small>In Arbeit</small><strong>4</strong></div>
+      </div>
+      <div class="project">
+        <div><strong>Website Relaunch</strong><br><small>Design und Entwicklung</small></div>
+        <span class="status">In Arbeit</span>
+      </div>
+      <div class="project">
+        <div><strong>Marketing Projekt</strong><br><small>Planung und Strategie</small></div>
+        <span class="status">In Arbeit</span>
+      </div>
+      <div class="project">
+        <div><strong>Neues Konzept</strong><br><small>Projektplanung</small></div>
+        <span class="status">Abgeschlossen</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="section-title">
+      <h2>Einfache Preise.</h2>
+      <p>Starte kostenlos und entscheide später.</p>
+    </div>
+    <div class="pricing">
+      <div class="price-card">
+        <h3>Free</h3>
+        <div class="price">0 € <small>/ Monat</small></div>
+        <p style="color:var(--muted)">Für den Einstieg.</p>
+        <ul>
+          <li>Bis zu 3 Projekte</li>
+          <li>Projektübersicht</li>
+          <li>Grundfunktionen</li>
+        </ul>
+        <button class="btn btn-outline" onclick="openModal()">Kostenlos starten</button>
+      </div>
+      <div class="price-card featured">
+        <span class="tag">PREMIUM</span>
+        <h3>Pro</h3>
+        <div class="price">9,99 € <small>/ Monat</small></div>
+        <p style="color:var(--muted)">Für umfangreichere Projekte.</p>
+        <ul>
+          <li>Unbegrenzte Projekte</li>
+          <li>Erweiterte Übersicht</li>
+          <li>Zusätzliche Funktionen</li>
+        </ul>
+        <button class="btn" onclick="alert('Premium-Zahlungen werden in einer späteren Version freigeschaltet.')">Pro auswählen</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<main id="app">
+  <section>
+    <div class="dashboard">
+      <div class="dash-top">
+        <div>
+          <div class="logo">Brief<span>Flow.</span></div>
+          <h2 style="margin-top:20px">Willkommen!</h2>
+          <p style="color:var(--muted)">Dein persönlicher Arbeitsbereich.</p>
+        </div>
+        <button class="btn btn-outline" onclick="logout()">Abmelden</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><small>Meine Projekte</small><strong id="count">0</strong></div>
+        <div class="stat"><small>Abgeschlossen</small><strong>0</strong></div>
+        <div class="stat"><small>In Arbeit</small><strong id="active">0</strong></div>
+      </div>
+      <h3 style="margin-bottom:15px">Meine Projekte</h3>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+        <input id="projectName" placeholder="Neues Projekt..." style="flex:1;min-width:150px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:white">
+        <button class="btn" onclick="addProject()">+ Projekt erstellen</button>
+      </div>
+      <div id="projectList"></div>
+      <p id="message"></p>
+    </div>
+  </section>
+</main>
+
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <button class="close" onclick="closeModal()">×</button>
+    <h2>BriefFlow beitreten</h2>
+    <p style="color:var(--muted);font-size:14px">Demo-Anmeldung für deinen Arbeitsbereich.</p>
+    <input id="email" type="email" placeholder="Deine E-Mail-Adresse">
+    <input id="password" type="password" placeholder="Passwort">
+    <button class="btn" onclick="login()">Weiter</button>
+    <p id="loginMessage"></p>
+    <p style="font-size:11px;color:var(--muted);margin-top:15px">
+      Dies ist eine lokale Demo. Es wird noch kein echtes Benutzerkonto erstellt.
+    </p>
+  </div>
+</div>
+
+<footer>
+  <div class="logo">Brief<span>Flow.</span></div>
+  <div>© 2026 BriefFlow. Alle Rechte vorbehalten.</div>
+  <div><a href="mailto:kontakt@brief-flow.de">Kontakt</a></div>
+</footer>
+
+<script>
+function openModal(){
+  document.getElementById('modal').style.display='flex';
+}
+function closeModal(){
+  document.getElementById('modal').style.display='none';
+}
+function login(){
+  const email=document.getElementById('email').value.trim();
+  const password=document.getElementById('password').value;
+  const message=document.getElementById('loginMessage');
+  if(!email || !email.includes('@') || password.length<6){
+    message.style.color='#ff8888';
+    message.textContent='Bitte gib eine gültige E-Mail und mindestens 6 Zeichen ein.';
+    return;
+  }
+  sessionStorage.setItem('briefFlowDemo','true');
+  sessionStorage.setItem('briefFlowEmail',email);
+  closeModal();
+  showApp();
+}
+function logout(){
+  sessionStorage.removeItem('briefFlowDemo');
+  document.getElementById('app').style.display='none';
+  document.getElementById('landing').style.display='block';
+}
+function showApp(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').style.display='block';
+  renderProjects();
+}
+function getProjects(){
+  try{return JSON.parse(localStorage.getItem('briefFlowProjects')||'[]')}
+  catch(e){return []}
+}
+function addProject(){
+  const input=document.getElementById('projectName');
+  const name=input.value.trim();
+  const message=document.getElementById('message');
+  if(!name){
+    message.textContent='Bitte gib einen Projektnamen ein.';
+    return;
+  }
+  const projects=getProjects();
+  projects.push({name:name,done:false});
+  localStorage.setItem('briefFlowProjects',JSON.stringify(projects));
+  input.value='';
+  message.textContent='Projekt wurde hinzugefügt.';
+  renderProjects();
+}
+function toggleProject(index){
+  const projects=getProjects();
+  projects[index].done=!projects[index].done;
+  localStorage.setItem('briefFlowProjects',JSON.stringify(projects));
+  renderProjects();
+}
+function deleteProject(index){
+  const projects=getProjects();
+  projects.splice(index,1);
+  localStorage.setItem('briefFlowProjects',JSON.stringify(projects));
+  renderProjects();
+}
+function renderProjects(){
+  const projects=getProjects();
+  document.getElementById('count').textContent=projects.length;
+  document.getElementById('active').textContent=projects.filter(p=>!p.done).length;
+  document.getElementById('projectList').innerHTML='';
+  projects.forEach((p,i)=>{
+    const row=document.createElement('div');
+    row.className='project';
+    const name=document.createElement('strong');
+    name.textContent=p.name;
+    if(p.done)name.style.textDecoration='line-through';
+    const status=document.createElement('span');
+    status.className='status';
+    status.textContent=p.done?'Erledigt':'In Arbeit';
+    const actions=document.createElement('div');
+    actions.style.display='flex';
+    actions.style.gap='8px';
+    const done=document.createElement('button');
+    done.className='btn btn-outline';
+    done.textContent=p.done?'Zurück':'Erledigt';
+    done.onclick=()=>toggleProject(i);
+    const del=document.createElement('button');
+    del.className='btn btn-outline';
+    del.textContent='Löschen';
+    del.onclick=()=>deleteProject(i);
+    actions.append(done,del);
+    row.append(name,status,actions);
+    document.getElementById('projectList').appendChild(row);
+  });
+}
+if(sessionStorage.getItem('briefFlowDemo')==='true')showApp();
+</script>
+</body>
+</html>
